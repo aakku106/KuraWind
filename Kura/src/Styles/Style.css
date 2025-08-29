@@ -2,11 +2,17 @@
 
 /* Kurama Theme - Glassmorphism & Apple-like Design */
 
-/* Mobile-First CSS Reset */
+/* Mobile-First CSS Reset with Scroll Control */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  overflow: hidden; /* Default: no scrolling */
+}
+
+/* Allow scrolling only for specific elements */
+html, body {
+  overflow: hidden; /* Prevent document scroll */
 }
 
 /* Kurama Theme Variables - Toned Down */
@@ -379,35 +385,43 @@ input[type="password"]:focus {
 .home-content {
   flex: 1;
   overflow-y: auto;
-  background: var(--glass-bg);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: rgba(248, 250, 252, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
-/* Chat List - Kurama Theme */
+/* Chat List - Apple-like Glassmorphism */
 .chats-list {
-  padding: 0;
+  padding: 1rem;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .chat-item {
   display: flex;
   align-items: center;
-  padding: 1.2rem 1.5rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.2rem;
   cursor: pointer;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  margin: 0.5rem;
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  margin-bottom: 0.5rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.chat-item:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .chat-item:active {
-  transform: translateY(2px) scale(0.98);
-  background: rgba(255, 107, 53, 0.1);
-  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+  transform: translateY(0) scale(0.98);
+  background: rgba(255, 120, 73, 0.08);
+  box-shadow: 0 2px 8px rgba(255, 120, 73, 0.12);
 }
 
 .avatar-container {
@@ -416,9 +430,9 @@ input[type="password"]:focus {
 }
 
 .avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   background: linear-gradient(
     135deg,
     var(--kurama-orange) 0%,
@@ -429,53 +443,56 @@ input[type="password"]:focus {
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.1rem;
+  box-shadow: 0 2px 8px rgba(255, 120, 73, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.6);
 }
 
 .online-indicator {
   position: absolute;
-  bottom: 2px;
-  right: 2px;
-  width: 14px;
-  height: 14px;
-  background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
-  border: 3px solid white;
-  border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 184, 148, 0.4);
+  bottom: -1px;
+  right: -1px;
+  width: 12px;
+  height: 12px;
+  background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  border: 2px solid white;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(52, 211, 153, 0.4);
 }
 
 .chat-content {
   flex: 1;
+  min-width: 0; /* Prevents overflow issues */
 }
 
 .chat-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
 }
 
 .friend-name {
-  font-weight: 700;
+  font-weight: 600;
   color: var(--kurama-dark);
   font-size: 1rem;
+  line-height: 1.2;
 }
 
 .timestamp {
   font-size: 0.75rem;
-  color: rgba(45, 52, 54, 0.6);
+  color: rgba(44, 62, 80, 0.5);
   font-weight: 500;
 }
 
 .last-message {
-  color: rgba(45, 52, 54, 0.7);
-  font-size: 0.9rem;
+  color: rgba(44, 62, 80, 0.65);
+  font-size: 0.85rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: 500;
+  font-weight: 400;
+  line-height: 1.3;
 }
 
 .unread-badge {
@@ -485,41 +502,48 @@ input[type="password"]:focus {
     var(--kurama-red) 100%
   );
   color: white;
-  border-radius: 50%;
-  min-width: 24px;
-  height: 24px;
+  border-radius: 10px;
+  min-width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   font-weight: 700;
   margin-left: 0.5rem;
-  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 1px 4px rgba(255, 120, 73, 0.3);
 }
 
-/* Friends List - Kurama Theme */
+/* Friends List - Apple-like Glassmorphism */
 .friends-list {
-  padding: 0;
+  padding: 1rem;
 }
 
 .friend-item {
   display: flex;
   align-items: center;
-  padding: 1.2rem 1.5rem;
+  padding: 1rem 1.2rem;
   cursor: pointer;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  margin: 0.5rem;
-  border-radius: 16px;
-  border: 1px solid var(--glass-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  margin-bottom: 0.5rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.friend-item:hover {
+  background: rgba(255, 255, 255, 0.75);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .friend-item:active {
-  transform: translateY(2px) scale(0.98);
-  background: rgba(255, 107, 53, 0.1);
-  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+  transform: translateY(0) scale(0.98);
+  background: rgba(255, 120, 73, 0.08);
+  box-shadow: 0 2px 8px rgba(255, 120, 73, 0.12);
 }
 
 .friend-info {
@@ -529,23 +553,25 @@ input[type="password"]:focus {
 }
 
 .friend-info .friend-name {
-  font-weight: 700;
+  font-weight: 600;
   color: var(--kurama-dark);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.2rem;
   font-size: 1rem;
+  line-height: 1.2;
 }
 
 .status {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 .status.online {
-  color: #00b894;
+  color: #10b981;
 }
 
 .status.offline {
-  color: rgba(45, 52, 54, 0.5);
+  color: rgba(44, 62, 80, 0.5);
 }
 
 /* Chat Component Styles - Kurama Theme */
@@ -573,6 +599,8 @@ input[type="password"]:focus {
   gap: 1rem;
   box-shadow: 0 2px 8px rgba(255, 120, 73, 0.2);
   position: relative;
+  border-radius: 18px 18px 0 0; /* Rounded top corners only */
+  overflow: visible; /* Allow content to show */
 }
 
 .back-btn {
