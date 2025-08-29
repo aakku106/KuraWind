@@ -1,5 +1,7 @@
 /** @format */
 
+/* Kurama Theme - Glassmorphism & Apple-like Design */
+
 /* Mobile-First CSS Reset */
 * {
   margin: 0;
@@ -7,15 +9,58 @@
   box-sizing: border-box;
 }
 
+/* Kurama Theme Variables */
+:root {
+  --kurama-orange: #ff6b35;
+  --kurama-dark-orange: #e55a2b;
+  --kurama-red: #d63031;
+  --kurama-gold: #fdcb6e;
+  --kurama-dark: #2d3436;
+  --kurama-light: #ddd6d6;
+  --glass-bg: rgba(255, 255, 255, 0.25);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --shadow-soft: 0 8px 32px rgba(31, 38, 135, 0.37);
+  --shadow-strong: 0 8px 32px rgba(255, 107, 53, 0.3);
+}
+
 /* Mobile-First Base Styles */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  background-color: #f5f5f5;
+  background: linear-gradient(135deg, #ff6b35 0%, #d63031 50%, #2d3436 100%);
+  background-attachment: fixed;
   color: #333;
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Animated background elements */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(255, 107, 53, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(214, 48, 49, 0.3) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 80%,
+      rgba(253, 203, 110, 0.2) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* App Container - Mobile First */
@@ -26,7 +71,6 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 0;
-  background-color: rgba(5, 10, 50, 0.267);
 }
 
 /* Main App Container */
@@ -34,8 +78,10 @@ body {
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
-  background-color: #ffffff;
-  box-shadow: none;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
   position: relative;
 }
 
@@ -49,133 +95,194 @@ body {
   justify-content: center;
 }
 
-/* Input Styling - Mobile First */
+/* Input Styling - Glassmorphism */
 input[type="text"],
 input[type="password"] {
   width: 100%;
   padding: 1rem 1.2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
   font-size: 1rem;
-  background-color: #fafafa;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   outline: none;
+  color: var(--kurama-dark);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input[type="text"]::placeholder,
+input[type="password"]::placeholder {
+  color: rgba(45, 52, 54, 0.6);
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
-  border-color: #007aff;
-  background-color: #ffffff;
+  border-color: var(--kurama-orange);
+  background: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+  transform: translateY(-2px);
 }
 
 /* Input Error State */
 .input-error {
-  border-color: #dc3545 !important;
-  background-color: #fff5f5 !important;
+  border-color: var(--kurama-red) !important;
+  background: rgba(214, 48, 49, 0.1) !important;
+  box-shadow: 0 0 20px rgba(214, 48, 49, 0.3) !important;
 }
 
 /* Error Messages */
 .error-message {
-  color: #dc3545;
+  color: var(--kurama-red);
   font-size: 0.85rem;
   margin-top: 0.25rem;
   font-weight: 500;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Button Styling */
+/* Button Styling - Kurama Theme */
 .btn {
   width: 100%;
   padding: 1rem;
   border: none;
-  border-radius: 8px;
+  border-radius: 16px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   margin-top: 0.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--shadow-strong);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .btn-primary {
-  background-color: #007aff;
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
   color: white;
 }
 
-.btn-primary:hover {
-  background-color: #0056cc;
+.btn-primary:active {
+  transform: translateY(2px) scale(0.98);
+  box-shadow: 0 4px 16px rgba(255, 107, 53, 0.4);
 }
 
 .btn-primary:disabled {
-  background-color: #ccc;
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(45, 52, 54, 0.5);
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Header Styling */
+/* Header Styling - Glassmorphism */
 .app-header {
   text-align: center;
   margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
 }
 
 .app-title {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #333;
+  font-size: 2.2rem;
+  font-weight: 800;
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
 }
 
 .app-subtitle {
-  color: #666;
+  color: var(--kurama-dark);
   font-size: 0.95rem;
+  opacity: 0.8;
+  font-weight: 500;
 }
 
-/* Navigation Links */
+/* Navigation Links - Glassmorphism */
 .switch-view {
   text-align: center;
   margin-top: 2rem;
-  color: #666;
+  padding: 1rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  color: var(--kurama-dark);
 }
 
 .link-button {
   background: none;
   border: none;
-  color: #007aff;
+  color: var(--kurama-orange);
   cursor: pointer;
   font-weight: 600;
-  text-decoration: underline;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
 }
 
-.link-button:hover {
-  color: #0056cc;
+.link-button:active {
+  background: rgba(255, 107, 53, 0.1);
+  transform: scale(0.95);
 }
 
+/* Form Group */
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
 
+/* Status Messages - Glassmorphism */
 .status-message {
-  padding: 0.8rem;
-  border-radius: 6px;
+  padding: 1rem;
+  border-radius: 16px;
   text-align: center;
   font-weight: 500;
   margin-top: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .status-success {
-  background-color: #d4edda;
+  background: rgba(40, 167, 69, 0.2);
   color: #155724;
+  border-color: rgba(40, 167, 69, 0.3);
+  box-shadow: 0 8px 32px rgba(40, 167, 69, 0.2);
 }
 
 .status-error {
-  background-color: #f8d7da;
-  color: #721c24;
+  background: rgba(214, 48, 49, 0.2);
+  color: var(--kurama-red);
+  border-color: rgba(214, 48, 49, 0.3);
+  box-shadow: 0 8px 32px rgba(214, 48, 49, 0.2);
 }
 
-.form-label {
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 0.5rem;
-}
-
-/* Tablet Styles - Centered Mobile View */
+/* Tablet/Desktop - Just centered mobile view */
 @media (min-width: 768px) {
   #root {
     padding: 2rem;
@@ -183,9 +290,643 @@ input[type="password"]:focus {
 
   .app-container {
     max-width: 400px;
-    min-height: auto;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .login-container {
+    min-height: auto;
+    padding: 3rem 2rem;
+  }
+
+  .home-container {
+    max-width: 400px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Home Page Styles - Kurama Theme */
+.home-container {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Header - Kurama Style */
+.home-header {
+  padding: 1.5rem;
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+  position: relative;
+}
+
+.home-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+  pointer-events: none;
+}
+
+.header-left .app-title {
+  font-size: 1.3rem;
+  margin: 0;
+  color: white;
+  font-weight: 800;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-text {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin: 0;
+  font-weight: 500;
+}
+
+.logout-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.logout-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(1px) scale(0.98);
+}
+
+/* Tab Navigation - Glassmorphism */
+.tab-navigation {
+  display: flex;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 1.2rem;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-weight: 600;
+  color: rgba(45, 52, 54, 0.7);
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+.tab-btn.active {
+  color: var(--kurama-orange);
+  border-bottom-color: var(--kurama-orange);
+  background: rgba(255, 107, 53, 0.1);
+}
+
+.tab-btn:active {
+  transform: scale(0.98);
+  background: rgba(255, 107, 53, 0.05);
+}
+
+/* Content */
+.home-content {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+/* Chat List - Kurama Theme */
+.chats-list {
+  padding: 0;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin: 0.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chat-item:active {
+  transform: translateY(2px) scale(0.98);
+  background: rgba(255, 107, 53, 0.1);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+}
+
+.avatar-container {
+  position: relative;
+  margin-right: 1rem;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.online-indicator {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  background: linear-gradient(135deg, #00b894 0%, #00a085 100%);
+  border: 3px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 184, 148, 0.4);
+}
+
+.chat-content {
+  flex: 1;
+}
+
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+
+.friend-name {
+  font-weight: 700;
+  color: var(--kurama-dark);
+  font-size: 1rem;
+}
+
+.timestamp {
+  font-size: 0.75rem;
+  color: rgba(45, 52, 54, 0.6);
+  font-weight: 500;
+}
+
+.last-message {
+  color: rgba(45, 52, 54, 0.7);
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.unread-badge {
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  color: white;
+  border-radius: 50%;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-left: 0.5rem;
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.4);
+}
+
+/* Friends List - Kurama Theme */
+.friends-list {
+  padding: 0;
+}
+
+.friend-item {
+  display: flex;
+  align-items: center;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin: 0.5rem;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.friend-item:active {
+  transform: translateY(2px) scale(0.98);
+  background: rgba(255, 107, 53, 0.1);
+  box-shadow: 0 8px 25px rgba(255, 107, 53, 0.2);
+}
+
+.friend-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.friend-info .friend-name {
+  font-weight: 700;
+  color: var(--kurama-dark);
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.status {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.status.online {
+  color: #00b894;
+}
+
+.status.offline {
+  color: rgba(45, 52, 54, 0.5);
+}
+
+/* Chat Component Styles - Kurama Theme */
+.chat-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+}
+
+/* Chat Header - Kurama Style */
+.chat-header {
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  color: white;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+  position: relative;
+}
+
+.chat-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+  pointer-events: none;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
+.chat-header-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.avatar.small {
+  width: 40px;
+  height: 40px;
+  font-size: 1rem;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.online-indicator.small {
+  width: 10px;
+  height: 10px;
+  bottom: 1px;
+  right: 1px;
+  border: 2px solid white;
+}
+
+.friend-details .friend-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.friend-details .status {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.chat-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.action-btn:active {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(0.95);
+}
+
+/* Messages Container - Kurama Theme */
+.messages-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
+
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Message Bubbles - Kurama Style */
+.message-wrapper {
+  display: flex;
+  margin-bottom: 0.3rem;
+  animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-wrapper.own {
+  justify-content: flex-end;
+}
+
+.message-wrapper.other {
+  justify-content: flex-start;
+}
+
+.message-bubble {
+  max-width: 80%;
+  padding: 0.9rem 1.2rem;
+  border-radius: 20px;
+  position: relative;
+  word-wrap: break-word;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.message-bubble.own {
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  color: white;
+  border-bottom-right-radius: 6px;
+  margin-left: auto;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+}
+
+.message-bubble.other {
+  background: rgba(255, 255, 255, 0.4);
+  color: var(--kurama-dark);
+  border-bottom-left-radius: 6px;
+  box-shadow: 0 4px 15px rgba(45, 52, 54, 0.1);
+}
+
+.message-content {
+  line-height: 1.4;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+
+.message-bubble.other .message-time {
+  color: rgba(45, 52, 54, 0.6);
+}
+
+.message-status {
+  font-size: 0.8rem;
+  color: var(--kurama-gold);
+}
+
+/* Message Input - Kurama Theme */
+.message-input-container {
+  background: var(--glass-bg);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 1.2rem 1.5rem;
+  border-top: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-border);
+  margin: 0.5rem;
+  border-radius: 20px;
+}
+
+.message-form {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.input-wrapper {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  padding: 0.6rem;
+  border: 2px solid transparent;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--kurama-orange);
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+}
+
+.attachment-btn,
+.emoji-btn {
+  background: none;
+  border: none;
+  padding: 0.6rem;
+  cursor: pointer;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.attachment-btn:active,
+.emoji-btn:active {
+  background: rgba(255, 107, 53, 0.1);
+  transform: scale(0.95);
+}
+
+.message-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: none;
+  padding: 0.6rem;
+  font-size: 1rem;
+  resize: none;
+  max-height: 100px;
+  color: var(--kurama-dark);
+  font-weight: 500;
+}
+
+.message-input::placeholder {
+  color: rgba(45, 52, 54, 0.5);
+}
+
+.send-btn {
+  background: linear-gradient(
+    135deg,
+    var(--kurama-orange) 0%,
+    var(--kurama-red) 100%
+  );
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.3rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+}
+
+.send-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.send-btn.active:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 8px rgba(255, 107, 53, 0.5);
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  #root {
+    padding: 2rem;
+  }
+
+  .app-container {
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
     overflow: hidden;
   }
 
@@ -193,27 +934,19 @@ input[type="password"]:focus {
     min-height: auto;
     padding: 3rem 2rem;
   }
-}
 
-/* Desktop Styles - Larger Centered Mobile View */
-@media (min-width: 1024px) {
-  #root {
-    padding: 4rem;
+  .home-container {
+    max-width: 400px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
   }
 
-  .app-container {
-    max-width: 420px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-  }
-
-  .login-container {
-    padding: 4rem 2.5rem;
-  }
-}
-
-/* Large Desktop Styles */
-@media (min-width: 1440px) {
-  .app-container {
-    max-width: 450px;
+  .chat-container {
+    height: 100vh;
+    max-width: 400px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
   }
 }

@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 
-// Username validation: 4+ characters, no numbers, only alphabets
 export const usernameSchema = z
   .string()
   .min(4, "Username must be at least 4 characters long")
@@ -11,7 +10,6 @@ export const usernameSchema = z
     "Username must contain only alphabets (no numbers or special characters)"
   );
 
-// Password validation: 6+ characters, at least 1 special character, at least 1 number
 export const passwordSchema = z
   .string()
   .min(6, "Password must be at least 6 characters long")
@@ -22,13 +20,11 @@ export const passwordSchema = z
     "Password must contain at least one special character"
   );
 
-// Combined user schema
 export const userSchema = z.object({
   userName: usernameSchema,
   password: passwordSchema,
 });
 
-// Validation helper function
 export const validateUser = (userData) => {
   try {
     userSchema.parse(userData);
@@ -42,7 +38,6 @@ export const validateUser = (userData) => {
   }
 };
 
-// Individual field validation helpers
 export const validateUsername = (username) => {
   try {
     usernameSchema.parse(username);

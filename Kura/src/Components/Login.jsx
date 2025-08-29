@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { findUserByCredentials } from "../Data/Users";
 
-function Login() {
+function Login({ onLogin }) {
   const [userTemp, setUserTemp] = useState({
     userNameTemp: "",
     passwordTemp: "",
@@ -19,13 +19,17 @@ function Login() {
 
       if (foundUser) {
         setLoginStatus("success");
+        // Redirect to home after successful login
+        setTimeout(() => {
+          onLogin(foundUser);
+        }, 300);
       } else {
         setLoginStatus("error");
       }
     } else {
       setLoginStatus(null);
     }
-  }, [userTemp]);
+  }, [userTemp, onLogin]);
 
   return (
     <div className="login-container">

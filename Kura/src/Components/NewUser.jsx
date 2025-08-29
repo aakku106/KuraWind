@@ -1,12 +1,12 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { userSchema } from "../validation/userSchema";
 import { addUser, findUserByUsername } from "../Data/Users";
 
-function NewUser() {
+function NewUser({ onUserCreated }) {
   const [submitStatus, setSubmitStatus] = useState(null);
 
   const {
@@ -19,6 +19,17 @@ function NewUser() {
     resolver: zodResolver(userSchema),
     mode: "onChange",
   });
+
+  // Auto-redirect after successful user creation
+  useEffect(() => {
+    if (submitStatus === "success") {
+      const timer = setTimeout(() => {
+        onUserCreated();
+      }, 600); // 0.6 seconds delay
+
+      return () => clearTimeout(timer); // Cleanup timer
+    }
+  }, [submitStatus, onUserCreated]);
 
   const onSubmit = (data) => {
     // Check if username already exists
@@ -75,7 +86,7 @@ function NewUser() {
 
         {submitStatus === "success" && (
           <div className="status-message status-success">
-            Account created successfully!
+            Account created successfully! Redirecting to login...
           </div>
         )}
         {submitStatus === "username-exists" && (
