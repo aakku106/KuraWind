@@ -28,8 +28,8 @@ function Login() {
   }, [userTemp]);
 
   return (
-    <>
-      <div>
+    <div className="login-container">
+      <div className="form-group">
         <input
           type="text"
           placeholder="Username"
@@ -38,6 +38,9 @@ function Login() {
             setUserTemp({ ...userTemp, userNameTemp: e.target.value })
           }
         />
+      </div>
+
+      <div className="form-group">
         <input
           type="password"
           placeholder="Password"
@@ -46,15 +49,17 @@ function Login() {
             setUserTemp({ ...userTemp, passwordTemp: e.target.value })
           }
         />
-
-        {loginStatus === "success" && (
-          <p style={{ color: "green" }}>Login successful!</p>
-        )}
-        {loginStatus === "error" && (
-          <p style={{ color: "red" }}>Invalid username or password</p>
-        )}
       </div>
-    </>
+
+      {loginStatus === "success" && (
+        <div className="status-message status-success">Login successful!</div>
+      )}
+      {loginStatus === "error" && (
+        <div className="status-message status-error">
+          Invalid username or password
+        </div>
+      )}
+    </div>
   );
 }
 
