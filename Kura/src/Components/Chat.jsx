@@ -6,11 +6,14 @@ import { getChatMessages, addMessage } from "../Data/messages";
 function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
   const [messages, setMessages] = useState(getChatMessages(chatId));
   const [newMessage, setNewMessage] = useState("");
-  const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
   }, [messages]);
 
   const handleSendMessage = (e) => {
@@ -59,7 +62,7 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
       </div>
 
       {/* Messages Area */}
-      <div className="messages-container">
+      <div className="messages-container" ref={messagesContainerRef}>
         <div className="messages-list">
           {messages.map((message) => (
             <div
@@ -75,7 +78,6 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
               </div>
             </div>
           ))}
-          <div ref={messagesEndRef} />
         </div>
       </div>
 
