@@ -185,7 +185,7 @@ input[type="password"]:focus {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
@@ -217,10 +217,10 @@ input[type="password"]:focus {
   margin-top: 2rem;
   padding: 1rem;
   background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border-radius: 12px;
   color: var(--kurama-dark);
 }
 
@@ -251,12 +251,12 @@ input[type="password"]:focus {
 /* Status Messages - Glassmorphism */
 .status-message {
   padding: 1rem;
-  border-radius: 16px;
+  border-radius: 12px;
   text-align: center;
   font-weight: 500;
   margin-top: 1rem;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border: 1px solid var(--glass-border);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -326,7 +326,7 @@ input[type="password"]:focus {
   align-items: center;
   box-shadow: 0 2px 8px rgba(255, 120, 73, 0.2);
   position: relative;
-  border-radius: 18px 18px 0 0; /* Rounded top corners only */
+  border-radius: 12px 12px 0 0; /* Rounded top corners only */
   overflow: visible; /* Allow content to show */
 }
 
@@ -420,19 +420,13 @@ input[type="password"]:focus {
   padding: 1rem 1.2rem;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   margin-bottom: 0.5rem;
-  border-radius: 18px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-}
-
-.chat-item:hover {
-  background: rgba(255, 255, 255, 0.75);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .chat-item:active {
@@ -449,7 +443,7 @@ input[type="password"]:focus {
 .avatar {
   width: 48px;
   height: 48px;
-  border-radius: 14px;
+  border-radius: 12px;
   background: linear-gradient(
     135deg,
     var(--kurama-orange) 0%,
@@ -473,7 +467,7 @@ input[type="password"]:focus {
   height: 12px;
   background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
   border: 2px solid white;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 1px 4px rgba(52, 211, 153, 0.4);
 }
 
@@ -519,7 +513,7 @@ input[type="password"]:focus {
     var(--kurama-red) 100%
   );
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   min-width: 20px;
   height: 20px;
   display: flex;
@@ -544,19 +538,13 @@ input[type="password"]:focus {
   padding: 1rem 1.2rem;
   cursor: pointer;
   background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   margin-bottom: 0.5rem;
-  border-radius: 18px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.4);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-}
-
-.friend-item:hover {
-  background: rgba(255, 255, 255, 0.75);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 .friend-item:active {
@@ -659,7 +647,7 @@ input[type="password"]:focus {
     var(--kurama-red) 100%
   );
   border: 2px solid rgba(255, 255, 255, 0.6);
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 .online-indicator.small {
@@ -696,7 +684,7 @@ input[type="password"]:focus {
   color: var(--kurama-dark);
   width: 32px;
   height: 32px;
-  border-radius: 8px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -716,11 +704,13 @@ input[type="password"]:focus {
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Prevent horizontal scroll */
   padding: 1rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   min-height: 0; /* Allow flex container to shrink */
   position: relative; /* Establish positioning context */
+  border-radius: 12px;
+  margin: 0.5rem;
 }
 
 .messages-list {
@@ -763,8 +753,8 @@ input[type="password"]:focus {
   border-radius: 20px;
   position: relative;
   word-wrap: break-word;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   border: 1px solid var(--glass-border);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -815,14 +805,14 @@ input[type="password"]:focus {
 
 /* Message Input - Kurama Theme */
 .message-input-container {
-  background: var(--glass-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   padding: 1.2rem 1.5rem;
   border-top: 1px solid var(--glass-border);
   border: 1px solid var(--glass-border);
   margin: 0.5rem;
-  border-radius: 0 0 18px 18px; /* Rounded bottom corners only */
+  border-radius: 0 0 12px 12px; /* Rounded bottom corners only */
   overflow: visible; /* Allow content to show */
 }
 
