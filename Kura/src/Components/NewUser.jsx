@@ -1,82 +1,59 @@
 /** @format */
 
 import React, { useState } from "react";
-import { validateUser } from "../validation/userSchema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema } from "../validation/userSchema";
 import { addUser, findUserByUsername } from "../Data/Users";
 
 function NewUser() {
-  const [user, setUser] = useState({
-    userName: "",
-    password: "",
-  });
-  const [validationErrors, setValidationErrors] = useState({});
   const [submitStatus, setSubmitStatus] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setError,
+  } = useForm({
+    resolver: zodResolver(userSchema),
+    mode: "onChange",
+  });
 
-    // Validate the user data
-    const validation = validateUser(user);
-
-    if (!validation.success) {
-      setValidationErrors(validation.errors);
-      setSubmitStatus("validation-error");
-      return;
-    }
-
+  const onSubmit = (data) => {
     // Check if username already exists
-    const existingUser = findUserByUsername(user.userName);
+    const existingUser = findUserByUsername(data.userName);
     if (existingUser) {
-      setValidationErrors({ userName: "Username already exists" });
+      setError("userName", {
+        type: "manual",
+        message: "Username already exists",
+      });
       setSubmitStatus("username-exists");
       return;
     }
 
     // Create the user
     try {
-      addUser(user);
+      addUser(data);
       setSubmitStatus("success");
-      setValidationErrors({});
-      // Reset form
-      setUser({ userName: "", password: "" });
+      reset(); // Reset form after successful submission
     } catch {
       setSubmitStatus("error");
     }
   };
 
-  const handleUsernameChange = (e) => {
-    const userName = e.target.value;
-    setUser({ ...user, userName });
-
-    // Clear username errors when user starts typing
-    if (validationErrors.userName) {
-      setValidationErrors({ ...validationErrors, userName: undefined });
-    }
-  };
-
-  const handlePasswordChange = (e) => {
-    const password = e.target.value;
-    setUser({ ...user, password });
-
-    // Clear password errors when user starts typing
-    if (validationErrors.password) {
-      setValidationErrors({ ...validationErrors, password: undefined });
-    }
-  };
-
   return (
     <div className="login-container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="form-group">
           <input
             type="text"
             placeholder="Username (4+ letters only)"
-            value={user.userName}
-            onChange={handleUsernameChange}
-            className={validationErrors.userName ? "input-error" : ""}
+            {...register("userName")}
+            className={errors.userName ? "input-error" : ""}
           />
-          {validationErrors.userName && (
-            <div className="error-message">{validationErrors.userName}</div>
+          {errors.userName && (
+            <div className="error-message">{errors.userName.message}</div>
           )}
         </div>
 
@@ -84,12 +61,11 @@ function NewUser() {
           <input
             type="password"
             placeholder="Password (6+ chars, 1 number, 1 special char)"
-            value={user.password}
-            onChange={handlePasswordChange}
-            className={validationErrors.password ? "input-error" : ""}
+            {...register("password")}
+            className={errors.password ? "input-error" : ""}
           />
-          {validationErrors.password && (
-            <div className="error-message">{validationErrors.password}</div>
+          {errors.password && (
+            <div className="error-message">{errors.password.message}</div>
           )}
         </div>
 
@@ -100,11 +76,6 @@ function NewUser() {
         {submitStatus === "success" && (
           <div className="status-message status-success">
             Account created successfully!
-          </div>
-        )}
-        {submitStatus === "validation-error" && (
-          <div className="status-message status-error">
-            Please fix the validation errors above
           </div>
         )}
         {submitStatus === "username-exists" && (
