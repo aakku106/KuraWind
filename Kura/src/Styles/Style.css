@@ -1,19 +1,31 @@
 /** @format */
 
-/* Kurama Theme - Glassmorphism & Apple-like Design */
+/* Kurama Theme /* Mobile-First Base Styles - Clean Background */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+  background-attachment: fixed;
+  color: #333;
+  line-height: 1.6;
+  min-height: 100vh;
+  height: 100vh; /* Fixed height */
+}
+ism & Apple-like Design */
 
-/* Mobile-First CSS Reset with Scroll Control */
+/* Mobile-First CSS Reset - Targeted Scroll Control */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  overflow: hidden; /* Default: no scrolling */
 }
 
-/* Allow scrolling only for specific elements */
+/* Prevent document scroll only */
 html,
 body {
   overflow: hidden; /* Prevent document scroll */
+  height: 100vh; /* Fixed height */
 }
 
 /* Kurama Theme Variables - Toned Down */
@@ -701,27 +713,25 @@ input[type="password"]:focus {
   transform: scale(0.95);
 }
 
-/* Messages Container - Kurama Theme */
+/* Messages Container - Fixed Scroll */
 .messages-container {
   flex: 1;
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Prevent horizontal scroll */
   padding: 1rem;
-  display: flex;
-  flex-direction: column;
   background: var(--glass-bg);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   min-height: 0; /* Allow flex container to shrink */
-  max-height: 100%; /* Ensure it doesn't exceed container */
+  position: relative; /* Establish positioning context */
 }
 
 .messages-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  flex-grow: 1; /* Take up available space */
-  overflow: visible; /* Let parent handle scrolling */
+  min-height: 100%; /* Ensure it takes full height */
+  padding-bottom: 1rem; /* Add space at bottom */
 }
 
 /* Message Bubbles - Kurama Style */
@@ -729,15 +739,6 @@ input[type="password"]:focus {
   display: flex;
   margin-bottom: 0.3rem;
   animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: visible; /* Allow message content to show */
-}
-
-.message-wrapper.own,
-.message-wrapper.other,
-.message-bubble,
-.message-bubble.own,
-.message-bubble.other {
-  overflow: visible; /* Override global overflow hidden */
 }
 
 @keyframes messageSlideIn {

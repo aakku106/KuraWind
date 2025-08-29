@@ -7,13 +7,28 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
   const [messages, setMessages] = useState(getChatMessages(chatId));
   const [newMessage, setNewMessage] = useState("");
   const messagesContainerRef = useRef(null);
+  const messagesEndRef = useRef(null);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight;
+    // Try immediate scroll
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
+
+    // Also try with a small delay to ensure DOM is ready
+    const timer = setTimeout(() => {
+      if (messagesEndRef.current) {
+        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+      }
+      // Also try direct scroll on container as backup
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTop =
+          messagesContainerRef.current.scrollHeight;
+      }
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [messages]);
 
   const handleSendMessage = (e) => {
@@ -78,6 +93,7 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
               </div>
             </div>
           ))}
+          <div ref={messagesEndRef} />
         </div>
       </div>
 
