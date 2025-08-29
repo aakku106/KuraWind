@@ -711,14 +711,14 @@ input[type="password"]:focus {
   background: var(--glass-bg);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+  min-height: 0; /* Allow flex container to shrink */
 }
 
 .messages-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  min-height: 0; /* Allow proper flex shrinking */
 }
 
 /* Message Bubbles - Kurama Style */
