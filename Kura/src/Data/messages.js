@@ -1,7 +1,7 @@
 /** @format */
 
-// Mock chat messages data
-export const chatMessages = {
+// Mock chat messages data - will be loaded from localStorage if available
+export let chatMessages = {
   1: [
     // Aarya Sharma chat
     {
@@ -155,6 +155,117 @@ export const chatMessages = {
   ],
 };
 
+// Load chat history from localStorage
+export const loadChatHistory = () => {
+  try {
+    const savedMessages = localStorage.getItem("kurawind_chat_history");
+    if (savedMessages) {
+      chatMessages = JSON.parse(savedMessages);
+    }
+  } catch (error) {
+    console.error("Error loading chat history:", error);
+  }
+};
+
+// Save chat history to localStorage
+export const saveChatHistory = () => {
+  try {
+    localStorage.setItem("kurawind_chat_history", JSON.stringify(chatMessages));
+  } catch (error) {
+    console.error("Error saving chat history:", error);
+  }
+};
+
+// Clear all chat history
+export const clearAllChatHistory = () => {
+  try {
+    // Reset to default messages only
+    chatMessages = {
+      1: [
+        {
+          id: "msg_1_1",
+          senderId: 1,
+          senderName: "Aarya Sharma",
+          message: "Hey there! How's your day going?",
+          timestamp: "10:30 AM",
+          isOwn: false,
+        },
+      ],
+      2: [
+        {
+          id: "msg_2_1",
+          senderId: 2,
+          senderName: "Bikram Thapa",
+          message: "Hey! Ready for a fresh start?",
+          timestamp: "Now",
+          isOwn: false,
+        },
+      ],
+      3: [
+        {
+          id: "msg_3_1",
+          senderId: 3,
+          senderName: "Chandra Karki",
+          message: "Hello! Let's start chatting",
+          timestamp: "Now",
+          isOwn: false,
+        },
+      ],
+      4: [
+        {
+          id: "msg_4_1",
+          senderId: 4,
+          senderName: "Deepak Rai",
+          message: "Hi there!",
+          timestamp: "Now",
+          isOwn: false,
+        },
+      ],
+      5: [
+        {
+          id: "msg_5_1",
+          senderId: 5,
+          senderName: "Esha Gurung",
+          message: "Hey! Nice to meet you",
+          timestamp: "Now",
+          isOwn: false,
+        },
+      ],
+    };
+    localStorage.removeItem("kurawind_chat_history");
+    saveChatHistory();
+    return true;
+  } catch (error) {
+    console.error("Error clearing chat history:", error);
+    return false;
+  }
+};
+
+// Clear individual chat history
+export const clearChatHistory = (chatId, friendName) => {
+  try {
+    // Reset to one default message for this specific chat
+    chatMessages[chatId] = [
+      {
+        id: `msg_${chatId}_1`,
+        senderId: chatId,
+        senderName: friendName,
+        message: "Hey! Let's start a fresh conversation 😊",
+        timestamp: "Now",
+        isOwn: false,
+      },
+    ];
+    saveChatHistory();
+    return true;
+  } catch (error) {
+    console.error("Error clearing individual chat history:", error);
+    return false;
+  }
+};
+
+// Initialize chat history on module load
+loadChatHistory();
+
 // Function to get messages for a specific chat
 export const getChatMessages = (chatId) => {
   return chatMessages[chatId] || [];
@@ -184,5 +295,9 @@ export const addMessage = (chatId, message) => {
   };
 
   chatMessages[chatId].push(newMessage);
+  saveChatHistory(); // Save after adding message
   return newMessage;
 };
+
+// Initialize chat history on module load
+loadChatHistory();

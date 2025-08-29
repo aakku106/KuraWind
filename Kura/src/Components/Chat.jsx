@@ -1,7 +1,11 @@
 /** @format */
 
 import React, { useState, useRef, useEffect } from "react";
-import { getChatMessages, addMessage } from "../Data/messages";
+import {
+  getChatMessages,
+  addMessage,
+  clearChatHistory,
+} from "../Data/messages";
 
 function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
   const [messages, setMessages] = useState(getChatMessages(chatId));
@@ -30,6 +34,22 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
 
     return () => clearTimeout(timer);
   }, [messages]);
+
+  const handleClearHistory = () => {
+    if (
+      window.confirm(
+        `Are you sure you want to clear all chat history with ${friendName}? This action cannot be undone.`
+      )
+    ) {
+      const success = clearChatHistory(chatId, friendName);
+      if (success) {
+        setMessages(getChatMessages(chatId));
+        alert("Chat history cleared successfully!");
+      } else {
+        alert("Failed to clear chat history. Please try again.");
+      }
+    }
+  };
 
   const handleSendMessage = (e) => {
     e.preventDefault();
@@ -71,6 +91,12 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
           </div>
         </div>
         <div className="chat-actions">
+          <button
+            onClick={handleClearHistory}
+            className="action-btn clear-history"
+            title="Clear Chat History">
+            🗑️
+          </button>
           <button className="action-btn">📞</button>
           <button className="action-btn">📹</button>
         </div>
