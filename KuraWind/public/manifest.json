@@ -1,0 +1,27 @@
+{
+  "name": "KuraWind",
+  "short_name": "KuraWind",
+  "description": "Privacy-first messenger with local storage and real-time messaging",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#667eea",
+  "theme_color": "#667eea",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ],
+  "categories": ["social", "communication"],
+  "shortcuts": [
+    {
+      "name": "New Chat",
+      "short_name": "Chat",
+      "description": "Start a new conversation",
+      "url": "/",
+      "icons": [{ "src": "/vite.svg", "sizes": "96x96" }]
+    }
+  ]
+}
