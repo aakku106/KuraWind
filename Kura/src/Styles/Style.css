@@ -11,7 +11,8 @@
 }
 
 /* Allow scrolling only for specific elements */
-html, body {
+html,
+body {
   overflow: hidden; /* Prevent document scroll */
 }
 
@@ -88,6 +89,7 @@ input[type="password"] {
   outline: none;
   color: var(--kurama-dark);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible; /* Allow text to show */
 }
 
 input[type="text"]::placeholder,
@@ -312,6 +314,8 @@ input[type="password"]:focus {
   align-items: center;
   box-shadow: 0 2px 8px rgba(255, 120, 73, 0.2);
   position: relative;
+  border-radius: 18px 18px 0 0; /* Rounded top corners only */
+  overflow: visible; /* Allow content to show */
 }
 
 .header-left .app-title {
@@ -384,7 +388,8 @@ input[type="password"]:focus {
 /* Content */
 .home-content {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scroll */
   background: rgba(248, 250, 252, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -517,6 +522,8 @@ input[type="password"]:focus {
 /* Friends List - Apple-like Glassmorphism */
 .friends-list {
   padding: 1rem;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .friend-item {
@@ -696,7 +703,8 @@ input[type="password"]:focus {
 /* Messages Container - Kurama Theme */
 .messages-container {
   flex: 1;
-  overflow-y: auto;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scroll */
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -709,6 +717,8 @@ input[type="password"]:focus {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 /* Message Bubbles - Kurama Style */
@@ -802,7 +812,8 @@ input[type="password"]:focus {
   border-top: 1px solid var(--glass-border);
   border: 1px solid var(--glass-border);
   margin: 0.5rem;
-  border-radius: 20px;
+  border-radius: 0 0 18px 18px; /* Rounded bottom corners only */
+  overflow: visible; /* Allow content to show */
 }
 
 .message-form {
@@ -858,6 +869,8 @@ input[type="password"]:focus {
   max-height: 100px;
   color: var(--kurama-dark);
   font-weight: 500;
+  overflow-y: auto; /* Allow text area to scroll if needed */
+  overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .message-input::placeholder {
