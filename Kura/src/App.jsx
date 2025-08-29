@@ -1,6 +1,6 @@
 /** @format */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Login from "./Components/Login";
 import NewUser from "./Components/NewUser";
 import Home from "./Components/Home";
@@ -10,16 +10,37 @@ function App() {
   const [currentView, setCurrentView] = useState("login"); // login, signup, home, chat
   const [currentUser, setCurrentUser] = useState(null);
   const [activeChat, setActiveChat] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Check for saved authentication on app load
+  useEffect(() => {
+    const savedUser = localStorage.getItem("kurawind-user");
+    if (savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        setCurrentUser(user);
+        setCurrentView("home");
+      } catch (error) {
+        console.error("Failed to parse saved user:", error);
+        localStorage.removeItem("kurawind-user");
+      }
+    }
+    setIsLoading(false);
+  }, []);
 
   const handleLogin = (user) => {
     setCurrentUser(user);
     setCurrentView("home");
+    // Save to localStorage for persistence
+    localStorage.setItem("kurawind-user", JSON.stringify(user));
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
     setActiveChat(null);
     setCurrentView("login");
+    // Remove from localStorage
+    localStorage.removeItem("kurawind-user");
   };
 
   const handleOpenChat = (chat) => {
@@ -31,6 +52,18 @@ function App() {
     setActiveChat(null);
     setCurrentView("home");
   };
+
+  // Show loading screen while checking authentication
+  if (isLoading) {
+    return (
+      <div className="app-container">
+        <div className="app-header">
+          <h1 className="app-title">KuraWind</h1>
+          <p className="app-subtitle">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   // Chat view
   if (currentView === "chat" && activeChat) {

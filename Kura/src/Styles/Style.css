@@ -9,58 +9,31 @@
   box-sizing: border-box;
 }
 
-/* Kurama Theme Variables */
+/* Kurama Theme Variables - Toned Down */
 :root {
-  --kurama-orange: #ff6b35;
+  --kurama-orange: #ff7849;
   --kurama-dark-orange: #e55a2b;
-  --kurama-red: #d63031;
-  --kurama-gold: #fdcb6e;
-  --kurama-dark: #2d3436;
-  --kurama-light: #ddd6d6;
-  --glass-bg: rgba(255, 255, 255, 0.25);
-  --glass-border: rgba(255, 255, 255, 0.3);
-  --shadow-soft: 0 8px 32px rgba(31, 38, 135, 0.37);
-  --shadow-strong: 0 8px 32px rgba(255, 107, 53, 0.3);
+  --kurama-red: #e74c3c;
+  --kurama-gold: #f39c12;
+  --kurama-dark: #2c3e50;
+  --kurama-light: #ecf0f1;
+  --glass-bg: rgba(255, 255, 255, 0.15);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --shadow-soft: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --shadow-strong: 0 4px 16px rgba(255, 120, 73, 0.15);
 }
 
-/* Mobile-First Base Styles */
+/* Mobile-First Base Styles - Subtle Background */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  background: linear-gradient(135deg, #ff6b35 0%, #d63031 50%, #2d3436 100%);
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
   background-attachment: fixed;
   color: #333;
   line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
-}
-
-/* Animated background elements */
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(
-      circle at 20% 50%,
-      rgba(255, 107, 53, 0.3) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 80% 20%,
-      rgba(214, 48, 49, 0.3) 0%,
-      transparent 50%
-    ),
-    radial-gradient(
-      circle at 40% 80%,
-      rgba(253, 203, 110, 0.2) 0%,
-      transparent 50%
-    );
-  pointer-events: none;
-  z-index: -1;
 }
 
 /* App Container - Mobile First */
@@ -73,15 +46,15 @@ body::before {
   padding: 0;
 }
 
-/* Main App Container */
+/* Main App Container - Subtle Glass */
 .app-container {
   width: 100%;
   max-width: 100%;
   min-height: 100vh;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   position: relative;
 }
 
@@ -95,17 +68,17 @@ body::before {
   justify-content: center;
 }
 
-/* Input Styling - Glassmorphism */
+/* Input Styling - Subtle Glassmorphism */
 input[type="text"],
 input[type="password"] {
   width: 100%;
   padding: 1rem 1.2rem;
-  border: 1px solid var(--glass-border);
-  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
   font-size: 1rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   outline: none;
   color: var(--kurama-dark);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -113,15 +86,15 @@ input[type="password"] {
 
 input[type="text"]::placeholder,
 input[type="password"]::placeholder {
-  color: rgba(45, 52, 54, 0.6);
+  color: rgba(44, 62, 80, 0.5);
 }
 
 input[type="text"]:focus,
 input[type="password"]:focus {
   border-color: var(--kurama-orange);
   background: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
-  transform: translateY(-2px);
+  box-shadow: 0 0 12px rgba(255, 120, 73, 0.15);
+  transform: translateY(-1px);
 }
 
 /* Input Error State */
@@ -140,12 +113,12 @@ input[type="password"]:focus {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Button Styling - Kurama Theme */
+/* Button Styling - Balanced Kurama Theme */
 .btn {
   width: 100%;
   padding: 1rem;
   border: none;
-  border-radius: 16px;
+  border-radius: 12px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -157,9 +130,9 @@ input[type="password"]:focus {
   );
   color: white;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: var(--shadow-strong);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 2px 8px rgba(255, 120, 73, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .btn-primary {
@@ -183,17 +156,17 @@ input[type="password"]:focus {
   transform: none;
 }
 
-/* Header Styling - Glassmorphism */
+/* Header Styling - Minimal Glassmorphism */
 .app-header {
   text-align: center;
   margin-bottom: 2rem;
   padding: 1.5rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  border: 1px solid var(--glass-border);
-  border-radius: 20px;
-  box-shadow: var(--shadow-soft);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .app-title {
@@ -214,7 +187,7 @@ input[type="password"]:focus {
 .app-subtitle {
   color: var(--kurama-dark);
   font-size: 0.95rem;
-  opacity: 0.8;
+  opacity: 0.7;
   font-weight: 500;
 }
 
@@ -319,7 +292,7 @@ input[type="password"]:focus {
   overflow: hidden;
 }
 
-/* Header - Kurama Style */
+/* Header - Subtle Kurama Style */
 .home-header {
   padding: 1.5rem;
   background: linear-gradient(
@@ -331,19 +304,8 @@ input[type="password"]:focus {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.3);
+  box-shadow: 0 2px 8px rgba(255, 120, 73, 0.2);
   position: relative;
-}
-
-.home-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-  pointer-events: none;
 }
 
 .header-left .app-title {
@@ -597,7 +559,7 @@ input[type="password"]:focus {
   -webkit-backdrop-filter: blur(15px);
 }
 
-/* Chat Header - Kurama Style */
+/* Chat Header - Clean Kurama Style */
 .chat-header {
   background: linear-gradient(
     135deg,
@@ -609,19 +571,8 @@ input[type="password"]:focus {
   display: flex;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 2px 8px rgba(255, 120, 73, 0.2);
   position: relative;
-}
-
-.chat-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 20"><path d="M0,10 Q25,0 50,10 T100,10 L100,20 L0,20 Z" fill="rgba(255,255,255,0.1)"/></svg>');
-  pointer-events: none;
 }
 
 .back-btn {
@@ -885,6 +836,7 @@ input[type="password"]:focus {
   color: rgba(45, 52, 54, 0.5);
 }
 
+/* Send Button - Toned Down */
 .send-btn {
   background: linear-gradient(
     135deg,
@@ -895,14 +847,14 @@ input[type="password"]:focus {
   border: none;
   width: 48px;
   height: 48px;
-  border-radius: 14px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 1.3rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+  box-shadow: 0 2px 8px rgba(255, 120, 73, 0.2);
 }
 
 .send-btn:disabled {

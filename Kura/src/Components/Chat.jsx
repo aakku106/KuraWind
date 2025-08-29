@@ -17,8 +17,11 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
     e.preventDefault();
 
     if (newMessage.trim()) {
-      const message = addMessage(chatId, newMessage.trim());
-      setMessages((prev) => [...prev, message]);
+      // Add message to global store
+      addMessage(chatId, newMessage.trim());
+
+      // Update local state with fresh data from store
+      setMessages(getChatMessages(chatId));
       setNewMessage("");
     }
   };

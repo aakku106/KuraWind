@@ -3,33 +3,33 @@
 // Mock chat messages data
 export const chatMessages = {
   1: [
-    // Alice Johnson chat
+    // Aarya Sharma chat
     {
-      id: 1,
+      id: "msg_1_1",
       senderId: 1,
-      senderName: "Alice Johnson",
+      senderName: "Aarya Sharma",
       message: "Hey there! How's your day going?",
       timestamp: "10:30 AM",
       isOwn: false,
     },
     {
-      id: 2,
+      id: "msg_1_2",
       senderId: "current",
       senderName: "You",
-      message: "Hi Alice! Pretty good, just working on some projects",
+      message: "Hi Aarya! Pretty good, just working on some projects",
       timestamp: "10:32 AM",
       isOwn: true,
     },
     {
-      id: 3,
+      id: "msg_1_3",
       senderId: 1,
-      senderName: "Alice Johnson",
+      senderName: "Aarya Sharma",
       message: "That's awesome! What kind of projects?",
       timestamp: "10:33 AM",
       isOwn: false,
     },
     {
-      id: 4,
+      id: "msg_1_4",
       senderId: "current",
       senderName: "You",
       message: "Building a cool messenger app 😊",
@@ -37,34 +37,34 @@ export const chatMessages = {
       isOwn: true,
     },
     {
-      id: 5,
+      id: "msg_1_5",
       senderId: 1,
-      senderName: "Alice Johnson",
+      senderName: "Aarya Sharma",
       message: "Hey! How are you doing?",
       timestamp: "10:37 AM",
       isOwn: false,
     },
     {
-      id: 6,
+      id: "msg_1_6",
       senderId: 1,
-      senderName: "Alice Johnson",
+      senderName: "Aarya Sharma",
       message: "Sounds interesting! Can't wait to see it",
       timestamp: "10:38 AM",
       isOwn: false,
     },
   ],
   2: [
-    // Bob Smith chat
+    // Bikram Thapa chat
     {
-      id: 1,
+      id: "msg_2_1",
       senderId: 2,
-      senderName: "Bob Smith",
+      senderName: "Bikram Thapa",
       message: "Thanks for helping me yesterday!",
       timestamp: "Yesterday 3:45 PM",
       isOwn: false,
     },
     {
-      id: 2,
+      id: "msg_2_2",
       senderId: "current",
       senderName: "You",
       message: "No problem at all! Happy to help",
@@ -72,34 +72,34 @@ export const chatMessages = {
       isOwn: true,
     },
     {
-      id: 3,
+      id: "msg_2_3",
       senderId: 2,
-      senderName: "Bob Smith",
+      senderName: "Bikram Thapa",
       message: "You're the best! 🙌",
       timestamp: "Yesterday 3:48 PM",
       isOwn: false,
     },
   ],
   3: [
-    // Carol Davis chat
+    // Chandra Karki chat
     {
-      id: 1,
+      id: "msg_3_1",
       senderId: "current",
       senderName: "You",
-      message: "Hey Carol, what time works for you?",
+      message: "Hey Chandra, what time works for you?",
       timestamp: "Today 2:30 PM",
       isOwn: true,
     },
     {
-      id: 2,
+      id: "msg_3_2",
       senderId: 3,
-      senderName: "Carol Davis",
+      senderName: "Chandra Karki",
       message: "Are we still meeting at 5pm?",
       timestamp: "Today 2:45 PM",
       isOwn: false,
     },
     {
-      id: 3,
+      id: "msg_3_3",
       senderId: "current",
       senderName: "You",
       message: "Yes, 5pm works perfect!",
@@ -108,46 +108,46 @@ export const chatMessages = {
     },
   ],
   4: [
-    // David Wilson chat
+    // Deepak Rai chat
     {
-      id: 1,
+      id: "msg_4_1",
       senderId: 4,
-      senderName: "David Wilson",
+      senderName: "Deepak Rai",
       message: "Check out this cool video!",
       timestamp: "Yesterday",
       isOwn: false,
     },
     {
-      id: 2,
+      id: "msg_4_2",
       senderId: 4,
-      senderName: "David Wilson",
+      senderName: "Deepak Rai",
       message: "https://example.com/video",
       timestamp: "Yesterday",
       isOwn: false,
     },
   ],
   5: [
-    // Emma Brown chat
+    // Esha Gurung chat
     {
-      id: 1,
+      id: "msg_5_1",
       senderId: "current",
       senderName: "You",
-      message: "Happy birthday Emma! 🎂",
+      message: "Happy birthday Esha! 🎂",
       timestamp: "2 days ago",
       isOwn: true,
     },
     {
-      id: 2,
+      id: "msg_5_2",
       senderId: 5,
-      senderName: "Emma Brown",
+      senderName: "Esha Gurung",
       message: "Happy birthday! 🎉",
       timestamp: "2 days ago",
       isOwn: false,
     },
     {
-      id: 3,
+      id: "msg_5_3",
       senderId: 5,
-      senderName: "Emma Brown",
+      senderName: "Esha Gurung",
       message: "Thank you so much! ❤️",
       timestamp: "2 days ago",
       isOwn: false,
@@ -160,6 +160,11 @@ export const getChatMessages = (chatId) => {
   return chatMessages[chatId] || [];
 };
 
+// Robust unique ID generator
+const generateUniqueId = () => {
+  return `msg_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+};
+
 // Function to add a new message
 export const addMessage = (chatId, message) => {
   if (!chatMessages[chatId]) {
@@ -167,7 +172,7 @@ export const addMessage = (chatId, message) => {
   }
 
   const newMessage = {
-    id: Date.now(),
+    id: generateUniqueId(),
     senderId: "current",
     senderName: "You",
     message: message,
