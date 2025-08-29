@@ -590,6 +590,7 @@ input[type="password"]:focus {
   background: var(--glass-bg);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
+  overflow: hidden; /* Prevent container from scrolling */
 }
 
 /* Chat Header - Clean Kurama Style */
@@ -712,13 +713,15 @@ input[type="password"]:focus {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   min-height: 0; /* Allow flex container to shrink */
+  max-height: 100%; /* Ensure it doesn't exceed container */
 }
 
 .messages-list {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  min-height: 0; /* Allow proper flex shrinking */
+  flex-grow: 1; /* Take up available space */
+  overflow: visible; /* Let parent handle scrolling */
 }
 
 /* Message Bubbles - Kurama Style */
@@ -726,6 +729,15 @@ input[type="password"]:focus {
   display: flex;
   margin-bottom: 0.3rem;
   animation: messageSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: visible; /* Allow message content to show */
+}
+
+.message-wrapper.own,
+.message-wrapper.other,
+.message-bubble,
+.message-bubble.own,
+.message-bubble.other {
+  overflow: visible; /* Override global overflow hidden */
 }
 
 @keyframes messageSlideIn {
