@@ -5,4 +5,4 @@
 # teck stack
 
 - vite+ react ------> frondend
-- Firebase ---------> APi
+- Firebase ---------> API
