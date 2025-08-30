@@ -1,6 +1,5 @@
 /** @format */
 
-// Mock chat messages data - will be loaded from localStorage if available
 export let chatMessages = {
   1: [
     // Aarya Sharma chat
