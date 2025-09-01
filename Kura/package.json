@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://YOUR_USERNAME.github.io/kurawind",
+  "homepage": "https://aakku106.github.io/KuraWind",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
