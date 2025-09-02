@@ -1,18 +1,35 @@
 /** @format */
 
-import React, { useState } from "react";
+import React from "react";
 import { AiFillHome } from "react-icons/ai";
 import { GiThreeFriends } from "react-icons/gi";
 import { AiFillSetting } from "react-icons/ai";
 import "../Styles/Navigations.css";
 
-export default function Navigations() {
-  const [activeTab, setActiveTab] = useState("home");
-
+export default function Navigations({
+  activeTab,
+  setActiveTab,
+  chats,
+  friends,
+}) {
   const navItems = [
-    { id: "home", icon: AiFillHome, label: "Home" },
-    { id: "friends", icon: GiThreeFriends, label: "Friends" },
-    { id: "settings", icon: AiFillSetting, label: "Settings" },
+    {
+      id: "chats",
+      icon: AiFillHome,
+      label: "Chats",
+      badge: chats ? chats.filter((chat) => chat.unreadCount > 0).length : 0,
+    },
+    {
+      id: "friends",
+      icon: GiThreeFriends,
+      label: "Friends",
+      badge: friends ? friends.filter((friend) => friend.online).length : 0,
+    },
+    {
+      id: "settings",
+      icon: AiFillSetting,
+      label: "Settings",
+    },
   ];
 
   return (
@@ -27,6 +44,9 @@ export default function Navigations() {
               onClick={() => setActiveTab(item.id)}>
               <div className="nav-icon-wrapper">
                 <IconComponent size={24} />
+                {item.badge > 0 && (
+                  <span className="nav-badge">{item.badge}</span>
+                )}
               </div>
               <span className="nav-label">{item.label}</span>
             </div>

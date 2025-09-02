@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import { chats, friends } from "../Data/chats";
 import { clearAllChatHistory } from "../Data/messages";
 import Navigations from "./Navigations";
+import Settings from "./Settings";
+import "../Styles/Settings.css";
 
 function Home({ user, onLogout, onOpenChat }) {
   const [activeTab, setActiveTab] = useState("chats"); // chats or friends
@@ -104,7 +106,7 @@ function Home({ user, onLogout, onOpenChat }) {
               </div>
             ))}
           </div>
-        ) : (
+        ) : activeTab === "friends" ? (
           <div className="friends-list">
             {friends.map((friend) => (
               <div
@@ -127,9 +129,18 @@ function Home({ user, onLogout, onOpenChat }) {
               </div>
             ))}
           </div>
+        ) : (
+          <div className="settings-view">
+            <Settings />
+          </div>
         )}
 
-        <Navigations />
+        <Navigations
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          chats={chats}
+          friends={friends}
+        />
       </div>
     </div>
   );
