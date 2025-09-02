@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { chats, friends } from "../Data/chats";
 import { clearAllChatHistory } from "../Data/messages";
+import Navigations from "./Navigations";
 
 function Home({ user, onLogout, onOpenChat }) {
   const [activeTab, setActiveTab] = useState("chats"); // chats or friends
@@ -64,7 +65,7 @@ function Home({ user, onLogout, onOpenChat }) {
       </div>
 
       {/* Tab Navigation */}
-      <div className="tab-navigation">
+      {/* <div className="tab-navigation">
         <button
           className={`tab-btn ${activeTab === "chats" ? "active" : ""}`}
           onClick={() => setActiveTab("chats")}>
@@ -75,7 +76,7 @@ function Home({ user, onLogout, onOpenChat }) {
           onClick={() => setActiveTab("friends")}>
           Friends ({friends.filter((friend) => friend.online).length} online)
         </button>
-      </div>
+      </div> */}
 
       {/* Content */}
       <div className="home-content">
@@ -127,6 +128,8 @@ function Home({ user, onLogout, onOpenChat }) {
             ))}
           </div>
         )}
+
+        <Navigations />
       </div>
     </div>
   );

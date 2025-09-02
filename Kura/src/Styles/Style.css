@@ -434,6 +434,7 @@ input[type="password"]:focus {
   background: rgba(248, 250, 252, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  padding-bottom: 8rem; /* Add space for navigation dock */
 }
 
 /* Chat List - Apple-like Glassmorphism */
@@ -974,6 +975,7 @@ input[type="password"]:focus {
     border-radius: 20px;
     box-shadow: var(--shadow-soft);
     overflow: hidden;
+    margin-top: -2rem;
   }
 
   .chat-container {

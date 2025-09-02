@@ -1,0 +1,125 @@
+/** @format */
+
+.nav-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0.5rem 1rem 2rem 1rem;
+  pointer-events: none; /* Allow clicks to pass through container */
+}
+
+.nav-dock {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 28px;
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  pointer-events: auto; /* Enable clicks on dock */
+  margin: 0 auto;
+  /* max-width: 300px; */
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.8rem 1rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  min-width: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(248, 250, 252, 0.3);
+  border-radius: 20px;
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.nav-item.active::before {
+  opacity: 1;
+  background: rgba(248, 250, 252, 0.6);
+  box-shadow: 0 4px 16px rgba(255, 120, 73, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.nav-icon-wrapper {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item svg {
+  color: rgba(44, 62, 80, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-item.active svg {
+  color: #ff7849;
+  transform: scale(1.1);
+}
+
+.nav-label {
+  position: relative;
+  z-index: 1;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(44, 62, 80, 0.6);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  line-height: 1;
+}
+
+.nav-item.active .nav-label {
+  color: #ff7849;
+  transform: translateY(-1px);
+}
+
+.nav-item:active {
+  transform: scale(0.95);
+}
+
+.nav-item:active .nav-icon-wrapper {
+  transform: scale(0.9);
+}
+
+/* Add some breathing room from the bottom edge */
+@media (max-height: 667px) {
+  .nav-container {
+    padding-bottom: 1.5rem;
+  }
+}
+
+/* iPhone X and newer with safe area */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .nav-container {
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom));
+  }
+}
