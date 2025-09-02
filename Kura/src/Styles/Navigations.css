@@ -141,3 +141,14 @@
     padding-bottom: calc(2rem + env(safe-area-inset-bottom));
   }
 }
+
+/* Lazy Loading Animation */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}

@@ -1,10 +1,15 @@
 /** @format */
 
-import { useState, useEffect } from "react";
-import Login from "./Components/Login";
-import NewUser from "./Components/NewUser";
-import Home from "./Components/Home";
-import Chat from "./Components/Chat";
+import { useState, useEffect, Suspense, lazy } from "react";
+import Spinner from "./Components/Spinner";
+
+// Lazy load components
+const Login = lazy(() => import("./Components/Login"));
+const NewUser = lazy(() => import("./Components/NewUser"));
+const Home = lazy(() => import("./Components/Home"));
+const Chat = lazy(() => import("./Components/Chat"));
+
+
 
 function App() {
   const [currentView, setCurrentView] = useState("login"); // login, signup, home, chat
@@ -68,24 +73,28 @@ function App() {
   // Chat view
   if (currentView === "chat" && activeChat) {
     return (
-      <Chat
-        chatId={activeChat.id}
-        friendName={activeChat.friendName}
-        friendAvatar={activeChat.avatar}
-        friendOnline={activeChat.online}
-        onBack={handleBackToHome}
-      />
+      <Suspense fallback={<Spinner /> }>
+        <Chat
+          chatId={activeChat.id}
+          friendName={activeChat.friendName}
+          friendAvatar={activeChat.avatar}
+          friendOnline={activeChat.online}
+          onBack={handleBackToHome}
+        />
+      </Suspense>
     );
   }
 
   // Home view
   if (currentView === "home") {
     return (
-      <Home
-        user={currentUser}
-        onLogout={handleLogout}
-        onOpenChat={handleOpenChat}
-      />
+      <Suspense fallback={<Spinner/ }>
+        <Home
+          user={currentUser}
+          onLogout={handleLogout}
+          onOpenChat={handleOpenChat}
+        />
+      </Suspense>
     );
   }
 
@@ -99,11 +108,13 @@ function App() {
         </p>
       </div>
 
-      {currentView === "login" ? (
-        <Login onLogin={handleLogin} />
-      ) : (
-        <NewUser onUserCreated={() => setCurrentView("login")} />
-      )}
+      <Suspense fallback={<Spinner/ }>
+        {currentView === "login" ? (
+          <Login onLogin={handleLogin} />
+        ) : (
+          <NewUser onUserCreated={() => setCurrentView("login")} />
+        )}
+      </Suspense>
 
       <div className="switch-view">
         {currentView === "login" ? (

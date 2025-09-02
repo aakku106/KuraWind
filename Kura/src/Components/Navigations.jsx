@@ -1,10 +1,33 @@
 /** @format */
 
-import React from "react";
-import { AiFillHome } from "react-icons/ai";
-import { GiThreeFriends } from "react-icons/gi";
-import { AiFillSetting } from "react-icons/ai";
+import React, { Suspense, lazy } from "react";
 import "../Styles/Navigations.css";
+
+// Lazy load icons for better performance
+const AiFillHome = lazy(() =>
+  import("react-icons/ai").then((module) => ({ default: module.AiFillHome }))
+);
+const GiThreeFriends = lazy(() =>
+  import("react-icons/gi").then((module) => ({
+    default: module.GiThreeFriends,
+  }))
+);
+const AiFillSetting = lazy(() =>
+  import("react-icons/ai").then((module) => ({ default: module.AiFillSetting }))
+);
+
+// Icon fallback component
+const IconFallback = () => (
+  <div
+    style={{
+      width: "24px",
+      height: "24px",
+      background: "rgba(255, 120, 73, 0.3)",
+      borderRadius: "4px",
+      animation: "pulse 1.5s ease-in-out infinite",
+    }}
+  />
+);
 
 export default function Navigations({
   activeTab,
@@ -43,7 +66,9 @@ export default function Navigations({
               className={`nav-item ${activeTab === item.id ? "active" : ""}`}
               onClick={() => setActiveTab(item.id)}>
               <div className="nav-icon-wrapper">
-                <IconComponent size={24} />
+                <Suspense fallback={<IconFallback />}>
+                  <IconComponent size={24} />
+                </Suspense>
                 {item.badge > 0 && (
                   <span className="nav-badge">{item.badge}</span>
                 )}

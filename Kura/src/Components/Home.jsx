@@ -1,11 +1,30 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, Suspense, lazy } from "react";
 import { chats, friends } from "../Data/chats";
 import { clearAllChatHistory } from "../Data/messages";
 import Navigations from "./Navigations";
-import Settings from "./Settings";
 import "../Styles/Settings.css";
+
+// Lazy load Settings component
+const Settings = lazy(() => import("./Settings"));
+
+// Loading component for Settings
+const SettingsLoader = () => (
+  <div
+    style={{
+      padding: "2rem",
+      textAlign: "center",
+      color: "var(--text-primary)",
+    }}>
+    <div className="loading-dots">
+      <span>•</span>
+      <span>•</span>
+      <span>•</span>
+    </div>
+    <p style={{ marginTop: "1rem", opacity: "0.7" }}>Loading Settings...</p>
+  </div>
+);
 
 function Home({ user, onLogout, onOpenChat }) {
   const [activeTab, setActiveTab] = useState("chats"); // chats or friends
@@ -131,7 +150,9 @@ function Home({ user, onLogout, onOpenChat }) {
           </div>
         ) : (
           <div className="settings-view">
-            <Settings />
+            <Suspense fallback={<SettingsLoader />}>
+              <Settings />
+            </Suspense>
           </div>
         )}
 
