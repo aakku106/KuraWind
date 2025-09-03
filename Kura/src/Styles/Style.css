@@ -1,17 +1,6 @@
 /** @format */
 
-/* Kurama Theme /* Mobile-First Base Styles - Clean Background */
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
-  background-attachment: fixed;
-  color: #333;
-  line-height: 1.6;
-  min-height: 100vh;
-  height: 100vh; /* Fixed height */
-}
+/* Kurama Theme /* Mobile-First Base Styles - Clean Background *
 
 /* KuraWind - Glassmorphism & Apple-like Design */
 
@@ -43,20 +32,25 @@ body {
   --shadow-strong: 0 4px 16px rgba(255, 120, 73, 0.15);
 }
 
-/* Mobile-First Base Styles - Subtle Background */
+/* Mobile-First Base Styles - Clean Background */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+  background: linear-gradient(
+    135deg,
+    #f8f9fa 0%,
+    #e9ecef 50%,
+    #dee2e6 100%
+  ) !important;
+  background-size: 400% 400%;
   background-attachment: fixed;
   color: #333;
   line-height: 1.6;
   min-height: 100vh;
-  overflow-x: hidden;
+  height: 100vh;
 }
 
-/* App Container - Mobile First */
+
 #root {
   width: 100%;
   min-height: 100vh;
@@ -66,7 +60,7 @@ body {
   padding: 0;
 }
 
-/* Main App Container - Subtle Glass */
+
 .app-container {
   width: 100%;
   max-width: 100%;
@@ -78,7 +72,7 @@ body {
   position: relative;
 }
 
-/* Login Container Styling */
+
 .login-container {
   padding: 2rem 1.5rem;
   display: flex;
@@ -88,7 +82,7 @@ body {
   justify-content: center;
 }
 
-/* Input Styling - Subtle Glassmorphism */
+
 input[type="text"],
 input[type="password"] {
   width: 100%;
@@ -102,7 +96,7 @@ input[type="password"] {
   outline: none;
   color: var(--kurama-dark);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: visible; /* Allow text to show */
+  overflow: visible; 
 }
 
 input[type="text"]::placeholder,
@@ -118,14 +112,14 @@ input[type="password"]:focus {
   transform: translateY(-1px);
 }
 
-/* Input Error State */
+
 .input-error {
   border-color: var(--kurama-red) !important;
   background: rgba(214, 48, 49, 0.1) !important;
   box-shadow: 0 0 20px rgba(214, 48, 49, 0.3) !important;
 }
 
-/* Error Messages */
+
 .error-message {
   color: var(--kurama-red);
   font-size: 0.85rem;
@@ -134,7 +128,7 @@ input[type="password"]:focus {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-/* Button Styling - Balanced Kurama Theme */
+
 .btn {
   width: 100%;
   padding: 1rem;
@@ -177,7 +171,7 @@ input[type="password"]:focus {
   transform: none;
 }
 
-/* Header Styling - Minimal Glassmorphism */
+
 .app-header {
   text-align: center;
   margin-bottom: 2rem;
@@ -212,7 +206,7 @@ input[type="password"]:focus {
   font-weight: 500;
 }
 
-/* Navigation Links - Glassmorphism */
+
 .switch-view {
   text-align: center;
   margin-top: 2rem;
@@ -249,7 +243,7 @@ input[type="password"]:focus {
   gap: 0.5rem;
 }
 
-/* Status Messages - Glassmorphism */
+
 .status-message {
   padding: 1rem;
   border-radius: 12px;
@@ -276,7 +270,7 @@ input[type="password"]:focus {
   box-shadow: 0 8px 32px rgba(214, 48, 49, 0.2);
 }
 
-/* Tablet/Desktop - Just centered mobile view */
+
 @media (min-width: 768px) {
   #root {
     padding: 2rem;
@@ -1070,5 +1064,20 @@ input[type="password"]:focus {
   40% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes backgroundAnimation {
+  0% {
+    background-position: 0% 50%;
+    transform: scale(1);
+  }
+  50% {
+    background-position: 100% 50%;
+    transform: scale(1.01);
+  }
+  100% {
+    background-position: 0% 50%;
+    transform: scale(1);
   }
 }
