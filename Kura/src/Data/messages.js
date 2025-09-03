@@ -159,10 +159,36 @@ export const loadChatHistory = () => {
   try {
     const savedMessages = localStorage.getItem("kurawind_chat_history");
     if (savedMessages) {
-      chatMessages = JSON.parse(savedMessages);
+      const parsed = JSON.parse(savedMessages);
+
+      // Clean up any corrupted messages
+      const cleanedMessages = {};
+      Object.keys(parsed).forEach((chatId) => {
+        cleanedMessages[chatId] = parsed[chatId].map((msg) => {
+          // Fix corrupted message content
+          let messageContent = msg.message;
+          if (typeof messageContent === "object" && messageContent !== null) {
+            // If message is an object, extract the actual message text
+            messageContent =
+              messageContent.message || messageContent.content || "";
+          }
+
+          return {
+            ...msg,
+            message: messageContent,
+          };
+        });
+      });
+
+      chatMessages = cleanedMessages;
+
+      // Save the cleaned data back
+      saveChatHistory();
     }
   } catch (error) {
     console.error("Error loading chat history:", error);
+    // If there's an error, clear localStorage and use defaults
+    localStorage.removeItem("kurawind_chat_history");
   }
 };
 
@@ -262,6 +288,37 @@ export const clearChatHistory = (chatId, friendName) => {
   }
 };
 
+// Function to clean corrupted messages
+export const cleanupCorruptedMessages = () => {
+  try {
+    Object.keys(chatMessages).forEach((chatId) => {
+      chatMessages[chatId] = chatMessages[chatId].map((msg) => {
+        // Fix corrupted message content
+        let messageContent = msg.message;
+        if (typeof messageContent === "object" && messageContent !== null) {
+          // If message is an object, extract the actual message text
+          messageContent =
+            messageContent.message ||
+            messageContent.content ||
+            "Message corrupted";
+        }
+
+        return {
+          ...msg,
+          message: messageContent,
+        };
+      });
+    });
+
+    saveChatHistory();
+    console.log("Cleaned up corrupted messages");
+    return true;
+  } catch (error) {
+    console.error("Error cleaning messages:", error);
+    return false;
+  }
+};
+
 // Initialize chat history on module load
 loadChatHistory();
 
@@ -276,16 +333,16 @@ const generateUniqueId = () => {
 };
 
 // Function to add a new message
-export const addMessage = (chatId, message) => {
+export const addMessage = (chatId, messageData) => {
   if (!chatMessages[chatId]) {
     chatMessages[chatId] = [];
   }
 
   const newMessage = {
     id: generateUniqueId(),
-    senderId: "current",
-    senderName: "You",
-    message: message,
+    senderId: messageData.senderId || "current",
+    senderName: messageData.senderName || "You",
+    message: messageData.message,
     timestamp: new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
@@ -300,3 +357,8 @@ export const addMessage = (chatId, message) => {
 
 // Initialize chat history on module load
 loadChatHistory();
+
+// Make cleanup function available globally for debugging
+if (typeof window !== "undefined") {
+  window.cleanupCorruptedMessages = cleanupCorruptedMessages;
+}

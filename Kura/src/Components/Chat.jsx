@@ -1,39 +1,20 @@
 /** @format */
 
-import React, { useState, useRef, useEffect } from "react";
-import {
-  getChatMessages,
-  addMessage,
-  clearChatHistory,
-} from "../Data/messages";
+import React, { useState, useRef } from "react";
+import { clearChatHistory } from "../Data/messages";
+import ChatHeader from "./Chat/ChatHeader";
+import MessagesList from "./Chat/MessagesList";
+import MessageInput from "./Chat/MessageInput";
 
 function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
-  const [messages, setMessages] = useState(getChatMessages(chatId));
-  const [newMessage, setNewMessage] = useState("");
-  const messagesContainerRef = useRef(null);
-  const messagesEndRef = useRef(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const messagesListRef = useRef(null);
 
-  // Auto-scroll to bottom when new messages arrive
-  useEffect(() => {
-    // Try immediate scroll
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-
-    // Also try with a small delay to ensure DOM is ready
-    const timer = setTimeout(() => {
-      if (messagesEndRef.current) {
-        messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-      }
-      // Also try direct scroll on container as backup
-      if (messagesContainerRef.current) {
-        messagesContainerRef.current.scrollTop =
-          messagesContainerRef.current.scrollHeight;
-      }
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [messages]);
+  // Get current user from localStorage
+  const currentUser = JSON.parse(localStorage.getItem("kurawind-user")) || {
+    id: "current-user",
+    userName: "You",
+  };
 
   const handleClearHistory = () => {
     if (
@@ -43,7 +24,8 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
     ) {
       const success = clearChatHistory(chatId, friendName);
       if (success) {
-        setMessages(getChatMessages(chatId));
+        // Force refresh of messages by updating key
+        setRefreshKey((prev) => prev + 1);
         alert("Chat history cleared successfully!");
       } else {
         alert("Failed to clear chat history. Please try again.");
@@ -51,105 +33,33 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
     }
   };
 
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-
-    if (newMessage.trim()) {
-      // Add message to global store
-      addMessage(chatId, newMessage.trim());
-
-      // Update local state with fresh data from store
-      setMessages(getChatMessages(chatId));
-      setNewMessage("");
-    }
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      handleSendMessage(e);
-    }
+  const handleMessageSent = () => {
+    // Force refresh of messages when a new message is sent
+    setRefreshKey((prev) => prev + 1);
   };
 
   return (
     <div className="chat-container">
-      {/* Chat Header */}
-      <div className="chat-header">
-        <button onClick={onBack} className="back-btn">
-          ←
-        </button>
-        <div className="chat-header-info">
-          <div className="avatar-container">
-            <div className="avatar small">{friendAvatar}</div>
-            {friendOnline && <div className="online-indicator small"></div>}
-          </div>
-          <div className="friend-details">
-            <h3 className="friend-name">{friendName}</h3>
-            <span className={`status ${friendOnline ? "online" : "offline"}`}>
-              {friendOnline ? "Online" : "Last seen recently"}
-            </span>
-          </div>
-        </div>
-        <div className="chat-actions">
-          <button
-            onClick={handleClearHistory}
-            className="action-btn clear-history"
-            title="Clear Chat History">
-            🗑️
-          </button>
-          <button className="action-btn">📞</button>
-          <button className="action-btn">📹</button>
-        </div>
-      </div>
+      <ChatHeader
+        friendName={friendName}
+        friendAvatar={friendAvatar}
+        friendOnline={friendOnline}
+        onBack={onBack}
+        onClearHistory={handleClearHistory}
+      />
 
-      {/* Messages Area */}
-      <div className="messages-container" ref={messagesContainerRef}>
-        <div className="messages-list">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`message-wrapper ${message.isOwn ? "own" : "other"}`}>
-              <div
-                className={`message-bubble ${message.isOwn ? "own" : "other"}`}>
-                <div className="message-content">{message.message}</div>
-                <div className="message-time">
-                  {message.timestamp}
-                  {message.isOwn && <span className="message-status">✓✓</span>}
-                </div>
-              </div>
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-      </div>
+      <MessagesList
+        key={refreshKey} // Force re-render when refreshKey changes
+        chatId={chatId}
+        currentUser={currentUser}
+        ref={messagesListRef}
+      />
 
-      {/* Message Input */}
-      <div className="message-input-container">
-        <form onSubmit={handleSendMessage} className="message-form">
-          <div className="input-wrapper">
-            <button type="button" className="attachment-btn">
-              📎
-            </button>
-            <input
-              type="text"
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Type a message..."
-              className="message-input"
-            />
-            <button type="button" className="emoji-btn">
-              😊
-            </button>
-          </div>
-          <button
-            type="submit"
-            className={`send-btn ${newMessage.trim() ? "active" : ""}`}
-            disabled={!newMessage.trim()}>
-            ➤
-          </button>
-        </form>
-      </div>
+      <MessageInput
+        chatId={chatId}
+        currentUser={currentUser}
+        onMessageSent={handleMessageSent}
+      />
     </div>
   );
 }
