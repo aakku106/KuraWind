@@ -4,25 +4,41 @@ import React, { useState, useRef, useEffect } from "react";
 import { getChatMessages } from "../../Data/messages";
 import MessageBubble from "./MessageBubble";
 
-function MessagesList({ chatId, currentUser }) {
+function MessagesList({ chatId, currentUser, refreshTrigger }) {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasInitiallyLoaded, setHasInitiallyLoaded] = useState(false);
   const messagesContainerRef = useRef(null);
   const messagesEndRef = useRef(null);
 
-  // Load messages
+  // Load messages initially with loading state
   useEffect(() => {
     const loadMessages = async () => {
-      setIsLoading(true);
-      // Simulate network delay for better UX
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      if (!hasInitiallyLoaded) {
+        setIsLoading(true);
+        // Simulate network delay for better UX only on initial load
+        await new Promise((resolve) => setTimeout(resolve, 300));
+      }
+
       const chatMessages = getChatMessages(chatId);
       setMessages(chatMessages);
-      setIsLoading(false);
+
+      if (!hasInitiallyLoaded) {
+        setIsLoading(false);
+        setHasInitiallyLoaded(true);
+      }
     };
 
     loadMessages();
-  }, [chatId]);
+  }, [chatId, hasInitiallyLoaded]);
+
+  // Update messages when refreshTrigger changes (without loading state)
+  useEffect(() => {
+    if (hasInitiallyLoaded && refreshTrigger !== undefined) {
+      const chatMessages = getChatMessages(chatId);
+      setMessages(chatMessages);
+    }
+  }, [refreshTrigger, chatId, hasInitiallyLoaded]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {

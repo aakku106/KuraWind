@@ -45,7 +45,7 @@ function MessageInput({ chatId, currentUser, onMessageSent }) {
         </div>
         <button
           type="submit"
-          className={`send-btn commit${newMessage.trim() ? "active" : ""}`}
+          className={`send-btn ${newMessage.trim() ? "active" : ""}`}
           disabled={!newMessage.trim()}>
           ➤
         </button>

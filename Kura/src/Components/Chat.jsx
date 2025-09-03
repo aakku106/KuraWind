@@ -49,9 +49,9 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
       />
 
       <MessagesList
-        key={refreshKey} // Force re-render when refreshKey changes
         chatId={chatId}
         currentUser={currentUser}
+        refreshTrigger={refreshKey} // Pass as prop instead of key
         ref={messagesListRef}
       />
 
