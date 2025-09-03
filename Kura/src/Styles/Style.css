@@ -426,22 +426,20 @@ input[type="password"]:focus {
   background: rgba(255, 107, 53, 0.05);
 }
 
-/* Content */
 .home-content {
   flex: 1;
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: auto;
+  overflow-x: hidden;
   background: rgba(248, 250, 252, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  padding-bottom: 8rem; /* Add space for navigation dock */
+  padding-bottom: 8rem;
 }
 
-/* Chat List - Apple-like Glassmorphism */
 .chats-list {
   padding: 1rem;
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .chat-item {
@@ -556,7 +554,6 @@ input[type="password"]:focus {
   box-shadow: 0 1px 4px rgba(255, 120, 73, 0.3);
 }
 
-/* Friends List - Apple-like Glassmorphism */
 .friends-list {
   padding: 1rem;
   overflow-y: auto; /* Enable vertical scrolling */
@@ -621,10 +618,9 @@ input[type="password"]:focus {
   background: var(--glass-bg);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  overflow: hidden; /* Prevent container from scrolling */
+  overflow: hidden;
 }
 
-/* Chat Header - Apple Liquid Glass */
 .chat-header {
   background: rgba(97, 97, 142, 0.026);
   backdrop-filter: blur(6px);
@@ -854,8 +850,8 @@ input[type="password"]:focus {
   border-top: 1px solid var(--glass-border);
   border: 1px solid var(--glass-border);
   margin: 0.5rem;
-  border-radius: 0 0 12px 12px; /* Rounded bottom corners only */
-  overflow: visible; /* Allow content to show */
+  border-radius: 0 0 12px 12px;
+  overflow: visible;
 }
 
 .message-form {

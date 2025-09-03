@@ -1,15 +1,19 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react";
 import {
   AiOutlineUser,
   AiFillSetting,
   AiFillInfoCircle,
   AiFillBell,
   AiFillLock,
+  AiOutlineArrowLeft,
 } from "react-icons/ai";
+import General from "./Settings/General";
 
 function Settings() {
+  const [currentView, setCurrentView] = useState("main"); // main, general, profile, etc.
+
   const user = JSON.parse(localStorage.getItem("currentUser")) || {
     name: "User",
     status: "online",
@@ -20,34 +24,52 @@ function Settings() {
       icon: <AiOutlineUser />,
       title: "Profile",
       subtitle: "Update your profile information",
-      action: () => console.log("Profile clicked"),
+      action: () => setCurrentView("profile"),
     },
     {
       icon: <AiFillBell />,
       title: "Notifications",
       subtitle: "Message and call notifications",
-      action: () => console.log("Notifications clicked"),
+      action: () => setCurrentView("notifications"),
     },
     {
       icon: <AiFillLock />,
       title: "Privacy",
       subtitle: "Block contacts and groups",
-      action: () => console.log("Privacy clicked"),
+      action: () => setCurrentView("privacy"),
     },
     {
       icon: <AiFillSetting />,
       title: "General",
       subtitle: "Theme, language, and more",
-      action: () => console.log("General clicked"),
+      action: () => setCurrentView("general"),
     },
     {
       icon: <AiFillInfoCircle />,
       title: "About",
       subtitle: "App version and info",
-      action: () => console.log("About clicked"),
+      action: () => setCurrentView("about"),
     },
   ];
 
+  // Render different views based on current selection
+  if (currentView === "general") {
+    return (
+      <div className="settings-container">
+        <div className="settings-header">
+          <button
+            className="back-button"
+            onClick={() => setCurrentView("main")}>
+            <AiOutlineArrowLeft size={20} />
+          </button>
+          <h2 className="settings-title">General Settings</h2>
+        </div>
+        <General />
+      </div>
+    );
+  }
+
+  // Main settings view
   return (
     <div className="settings-container">
       {/* User Profile Section */}
