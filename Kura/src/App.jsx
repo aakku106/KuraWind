@@ -9,8 +9,6 @@ const NewUser = lazy(() => import("./Components/NewUser"));
 const Home = lazy(() => import("./Components/Home"));
 const Chat = lazy(() => import("./Components/Chat"));
 
-
-
 function App() {
   const [currentView, setCurrentView] = useState("login"); // login, signup, home, chat
   const [currentUser, setCurrentUser] = useState(null);
@@ -73,7 +71,7 @@ function App() {
   // Chat view
   if (currentView === "chat" && activeChat) {
     return (
-      <Suspense fallback={<Spinner /> }>
+      <Suspense fallback={<Spinner />}>
         <Chat
           chatId={activeChat.id}
           friendName={activeChat.friendName}
@@ -88,7 +86,7 @@ function App() {
   // Home view
   if (currentView === "home") {
     return (
-      <Suspense fallback={<Spinner/ }>
+      <Suspense fallback={<Spinner />}>
         <Home
           user={currentUser}
           onLogout={handleLogout}
@@ -108,7 +106,7 @@ function App() {
         </p>
       </div>
 
-      <Suspense fallback={<Spinner/ }>
+      <Suspense fallback={<Spinner />}>
         {currentView === "login" ? (
           <Login onLogin={handleLogin} />
         ) : (
