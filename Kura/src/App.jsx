@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense, lazy } from "react";
 import Spinner from "./Components/Spinner";
+import ablyService from "./Data/ablyService";
 
 // Lazy load components
 const Login = lazy(() => import("./Components/Login"));
@@ -23,6 +24,8 @@ function App() {
         const user = JSON.parse(savedUser);
         setCurrentUser(user);
         setCurrentView("home");
+        // Initialize Ably service with the user
+        ablyService.init(user);
       } catch (error) {
         console.error("Failed to parse saved user:", error);
         localStorage.removeItem("kurawind-user");
@@ -36,6 +39,8 @@ function App() {
     setCurrentView("home");
     // Save to localStorage for persistence
     localStorage.setItem("kurawind-user", JSON.stringify(user));
+    // Initialize Ably service with the user
+    ablyService.init(user);
   };
 
   const handleLogout = () => {
@@ -44,6 +49,8 @@ function App() {
     setCurrentView("login");
     // Remove from localStorage
     localStorage.removeItem("kurawind-user");
+    // Close Ably connection
+    ablyService.close();
   };
 
   const handleOpenChat = (chat) => {

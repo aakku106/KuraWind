@@ -1,5 +1,7 @@
 /** @format */
 
+import ablyService from "./ablyService";
+
 export let chatMessages = {
   1: [
     // Aarya Sharma chat
@@ -333,7 +335,7 @@ const generateUniqueId = () => {
 };
 
 // Function to add a new message
-export const addMessage = (chatId, messageData) => {
+export const addMessage = async (chatId, messageData) => {
   if (!chatMessages[chatId]) {
     chatMessages[chatId] = [];
   }
@@ -350,9 +352,45 @@ export const addMessage = (chatId, messageData) => {
     isOwn: true,
   };
 
+  // Add message to local storage
   chatMessages[chatId].push(newMessage);
-  saveChatHistory(); // Save after adding message
+  saveChatHistory();
+
+  // Try to send via Ably for real-time messaging
+  try {
+    const success = await ablyService.sendMessage(chatId, {
+      message: messageData.message,
+    });
+
+    if (success) {
+      console.log("Message sent via Ably real-time");
+    }
+  } catch {
+    console.log("Ably not available or failed, using local storage only");
+  }
+
   return newMessage;
+};
+
+// Function to add received message from Ably
+export const addReceivedMessage = (chatId, messageData) => {
+  if (!chatMessages[chatId]) {
+    chatMessages[chatId] = [];
+  }
+
+  const receivedMessage = {
+    id: generateUniqueId(),
+    senderId: messageData.senderId,
+    senderName: messageData.senderName,
+    message: messageData.message,
+    timestamp: messageData.timestamp,
+    isOwn: false,
+  };
+
+  chatMessages[chatId].push(receivedMessage);
+  saveChatHistory();
+
+  return receivedMessage;
 };
 
 // Initialize chat history on module load

@@ -6,10 +6,10 @@ import { addMessage } from "../../Data/messages";
 function MessageInput({ chatId, currentUser, onMessageSent }) {
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
     if (newMessage.trim()) {
-      const success = addMessage(chatId, {
+      const success = await addMessage(chatId, {
         message: newMessage.trim(),
         senderId: currentUser?.id || "current-user",
         senderName: currentUser?.userName || "You",

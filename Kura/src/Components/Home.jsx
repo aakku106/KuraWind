@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, Suspense, lazy } from "react";
-import { chats, friends } from "../Data/chats";
+import { friends, getChatsForUser } from "../Data/chats";
 import { clearAllChatHistory } from "../Data/messages";
 import Navigations from "./Navigations";
 import "../Styles/Settings.css";
@@ -28,6 +28,9 @@ const SettingsLoader = () => (
 
 function Home({ user, onLogout, onOpenChat }) {
   const [activeTab, setActiveTab] = useState("chats"); // chats or friends
+
+  // Get user-specific chats (includes real-time chat for aakku and ccn)
+  const userChats = getChatsForUser(user);
 
   const handleChatClick = (chat) => {
     onOpenChat(chat);
@@ -103,14 +106,19 @@ function Home({ user, onLogout, onOpenChat }) {
       <div className="home-content">
         {activeTab === "chats" ? (
           <div className="chats-list">
-            {chats.map((chat) => (
+            {userChats.map((chat) => (
               <div
                 key={chat.id}
-                className="chat-item"
+                className={`chat-item ${
+                  chat.isRealTime ? "real-time-chat" : ""
+                }`}
                 onClick={() => handleChatClick(chat)}>
                 <div className="avatar-container">
                   <div className="avatar">{chat.avatar}</div>
                   {chat.online && <div className="online-indicator"></div>}
+                  {chat.isRealTime && (
+                    <div className="realtime-indicator">⚡</div>
+                  )}
                 </div>
                 <div className="chat-content">
                   <div className="chat-header">
@@ -159,7 +167,7 @@ function Home({ user, onLogout, onOpenChat }) {
         <Navigations
           activeTab={activeTab}
           setActiveTab={setActiveTab}
-          chats={chats}
+          chats={userChats}
           friends={friends}
         />
       </div>

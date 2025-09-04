@@ -1,7 +1,8 @@
 /** @format */
 
-import React, { useState, useRef } from "react";
-import { clearChatHistory } from "../Data/messages";
+import React, { useState, useRef, useEffect, useMemo } from "react";
+import { clearChatHistory, addReceivedMessage } from "../Data/messages";
+import ablyService from "../Data/ablyService";
 import ChatHeader from "./Chat/ChatHeader";
 import MessagesList from "./Chat/MessagesList";
 import MessageInput from "./Chat/MessageInput";
@@ -11,10 +12,36 @@ function Chat({ chatId, friendName, friendAvatar, friendOnline, onBack }) {
   const messagesListRef = useRef(null);
 
   // Get current user from localStorage
-  const currentUser = JSON.parse(localStorage.getItem("kurawind-user")) || {
-    id: "current-user",
-    userName: "You",
-  };
+  const currentUser = useMemo(() => {
+    return (
+      JSON.parse(localStorage.getItem("kurawind-user")) || {
+        id: "current-user",
+        userName: "You",
+      }
+    );
+  }, []);
+
+  // Initialize Ably service and subscribe to real-time messages
+  useEffect(() => {
+    // Initialize Ably service with current user
+    ablyService.init(currentUser);
+
+    // Subscribe to real-time messages for this chat
+    const handleReceivedMessage = (messageData) => {
+      // Add received message to local storage
+      addReceivedMessage(chatId, messageData);
+      // Trigger refresh to show new message
+      setRefreshKey((prev) => prev + 1);
+    };
+
+    // Subscribe to messages if real-time is available
+    ablyService.subscribeToChat(chatId, chatId, handleReceivedMessage);
+
+    // Cleanup on unmount
+    return () => {
+      ablyService.unsubscribe();
+    };
+  }, [chatId, currentUser]);
 
   const handleClearHistory = () => {
     if (
