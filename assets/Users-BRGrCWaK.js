@@ -1,0 +1,1 @@
+const r=[{id:1,userName:"aakku",password:"@aakku"},{id:2,userName:"ccn",password:"@ccn"}],n=(e,s)=>r.find(a=>a.userName===e&&a.password===s),d=e=>r.find(s=>s.userName===e),t=e=>{const s={id:r.length+1,...e};return r.push(s),s};export{d as a,t as b,n as f};
